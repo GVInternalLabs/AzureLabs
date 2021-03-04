@@ -26,7 +26,7 @@ write_files:
       var app = express()
       var os = require('os');
       app.get('/', function (req, res) {
-        res.send('Welcome to Georgios Ventouris Scaling Scale Set Lab. This is a start!')
+        res.send('Welcome to GV Scaling Scale Set Lab. This is a start!')
       })
       app.listen(3000, function () {
         console.log('Hello world app listening on port 3000!')
