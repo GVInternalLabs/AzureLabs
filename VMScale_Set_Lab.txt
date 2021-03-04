@@ -1,0 +1,21 @@
+#Virtual Maschine Scaling: Scale Sets Lab
+
+
+set-location
+
+#output in a txt file
+invoke-webrequest -uri "https://raw.githubusercontent.com/GVInternalLabs/VMScaleSet/main/webserverscript.txt?token=ATCWCFTCAANXSGEHAEWMBXDAIDKUE" -outfile "VMssWebServerConfig.txt"
+
+#Check the downloaded file in our directory
+ls
+
+#This Command will create a new resource group
+az group create --name GVSSlab --location "East US 2"
+
+#This command will create a VM scale set
+az vmss create --name GVss --resource-group GVSSlab --image UbuntuLTS --location "East US 2" --admin-username azureuser --generate-ssh-keys --lb gvLB --custom-data VMssWebServerConfig.txt
+
+#make firewall rule to access the website
+az network lb rule create --resource-group GVSSlab --lb-name gvLB --name gvLBrule --backend-pool-name gvLBBEPool --backend-port 80 --frontend-ip-name loadbalancerfrontend --frontend-port 80 --protocol tcp
+
+#Delete Resouce Group after completion.
